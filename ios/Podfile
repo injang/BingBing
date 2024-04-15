@@ -23,13 +23,15 @@ flipper_config = FlipperConfiguration.disabled
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
+  use_frameworks! :linkage => linkage.to_sym  
 end
 
 target 'BingBing' do
   config = use_native_modules!
 
-  use_react_native!(
+  pod 'GoogleUtilities', :modular_headers => true
+
+  use_react_native!(    
     :path => config[:reactNativePath],
     # Enables Flipper.
     #
@@ -37,7 +39,7 @@ target 'BingBing' do
     # you should disable the next line.
     :flipper_configuration => flipper_config,
     # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :app_path => "#{Pod::Config.instance.installation_root}/.."    
   )
 
   target 'BingBingTests' do
